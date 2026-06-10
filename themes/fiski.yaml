@@ -1,0 +1,129 @@
+# ============================================================
+#  Fiski Theme — spiti.org
+#  Палитра: бирюза натурального камня (Morenci / Royston)
+#
+#  Hex-коды бренда Fiski:
+#    Primary (хедер/кнопки):   #1d9e7e
+#    Primary dark:             #0f6e5c
+#    Primary darker:           #0d5c52
+#    Surface (фон карточек):   #c8ede6
+#    Surface mid:              #9addd0
+#    Accent (безопасность):    #1a5f7a
+#    Accent light:             #2490b8
+#    Text on primary:          #ffffff
+#    Text on surface:          #0a4a43
+#
+#  Установка:
+#    1. Скопировать в /config/themes/fiski.yaml
+#    2. В configuration.yaml добавить:
+#         frontend:
+#           themes: !include_dir_merge_named themes/
+#    3. Перезапустить HA
+#    4. Профиль → Тема → Fiski
+# ============================================================
+
+Fiski:
+  # --- Основные цвета бренда ---
+  primary-color:                    "#1d9e7e"
+  accent-color:                     "#1a5f7a"
+  dark-primary-color:               "#0f6e5c"
+  light-primary-color:              "#c8ede6"
+
+  # --- Фон ---
+  primary-background-color:         "#f4faf8"
+  secondary-background-color:       "#eaf6f2"
+  card-background-color:            "#ffffff"
+  paper-card-background-color:      "#ffffff"
+  lovelace-background:              "#eaf6f2"
+
+  # --- Текст ---
+  primary-text-color:               "#0d2e28"
+  secondary-text-color:             "#2a6b5e"
+  disabled-text-color:              "#7fb8ae"
+  text-primary-color:               "#ffffff"
+  text-light-primary-color:         "#ffffff"
+
+  # --- Сайдбар (скрытый у клиента, виден только в сервисном меню) ---
+  sidebar-background-color:         "#0d5c52"
+  sidebar-text-color:               "#c8ede6"
+  sidebar-icon-color:               "#9addd0"
+  sidebar-selected-background-color: "#0f6e5c"
+  sidebar-selected-text-color:      "#ffffff"
+  sidebar-selected-icon-color:      "#ffffff"
+
+  # --- Хедер ---
+  app-header-background-color:      "#1d9e7e"
+  app-header-text-color:            "#ffffff"
+  app-header-edit-background-color: "#0f6e5c"
+
+  # --- Кнопки и переключатели ---
+  switch-checked-color:             "#1d9e7e"
+  switch-checked-button-color:      "#ffffff"
+  switch-checked-track-color:       "#9addd0"
+  switch-unchecked-color:           "#b4b2a9"
+  slider-color:                     "#1d9e7e"
+  slider-secondary-color:           "#9addd0"
+  slider-bar-color:                 "#c8ede6"
+
+  # --- Состояния ---
+  state-active-color:               "#1d9e7e"
+  state-inactive-color:             "#b4b2a9"
+  state-unavailable-color:          "#e0b89a"
+
+  # --- Успех / предупреждение / ошибка ---
+  success-color:                    "#1d9e7e"
+  warning-color:                    "#ba7517"
+  error-color:                      "#993c1d"
+  info-color:                       "#1a5f7a"
+
+  # --- Карточки и разделители ---
+  divider-color:                    "#c8ede6"
+  paper-item-icon-color:            "#1d9e7e"
+  paper-item-icon-active-color:     "#0d5c52"
+
+  # --- Чипы и бейджи ---
+  label-badge-background-color:     "#1d9e7e"
+  label-badge-text-color:           "#ffffff"
+  label-badge-red:                  "#993c1d"
+  label-badge-green:                "#1d9e7e"
+  label-badge-yellow:               "#ba7517"
+  label-badge-blue:                 "#1a5f7a"
+  label-badge-grey:                 "#5f5e5a"
+
+  # --- Энергия (energy dashboard) ---
+  energy-grid-consumption-color:    "#1d9e7e"
+  energy-grid-return-color:         "#2490b8"
+  energy-solar-color:               "#ba7517"
+  energy-battery-in-color:          "#0f6e5c"
+  energy-battery-out-color:         "#9addd0"
+
+  # --- Шрифт ---
+  paper-font-common-base_-_font-family: "'Inter', 'Segoe UI', sans-serif"
+
+  # --- Скругления ---
+  border-radius:                    "12px"
+  ha-card-border-radius:            "12px"
+  ha-card-border-width:             "0px"
+  ha-card-box-shadow:               "0 2px 8px rgba(13,92,82,0.08)"
+
+  # --- Мобильный вид ---
+  mdc-theme-primary:                "#1d9e7e"
+  mdc-theme-on-primary:             "#ffffff"
+  mdc-theme-secondary:              "#1a5f7a"
+  mdc-theme-on-secondary:           "#ffffff"
+
+  # Скрыть Home Assistant из хедера
+  ha-sidebar$: |
+    .menu .title { display: none !important; }
+    .header { display: none !important; }
+
+  # Скрыть лишние пункты сайдбара
+  ha-sidebar$: |
+    a[data-panel="map"],
+    a[data-panel="energy"],
+    a[data-panel="logbook"],
+    a[data-panel="history"],
+    a[data-panel="media-browser"],
+    a[data-panel="todo"],
+    a[href*="hacs"],
+    a[href*="a0d7b954_ssh"] { display: none !important; }

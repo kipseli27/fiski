@@ -1,0 +1,113 @@
+################################
+#  View: Κλίμα (Климат)
+################################
+
+title: Κλίμα
+path: climate
+icon: mdi:thermometer
+
+cards:
+
+  - type: custom:mushroom-title-card
+    title: Κλίμα
+    subtitle: Θερμοκρασία & Κλιματισμός
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; }
+
+  # Температуры по комнатам
+  - type: horizontal-stack
+    cards:
+
+      - type: custom:mushroom-template-card
+        primary: Σαλόνι
+        secondary: >
+          {{ states('sensor.living_room_temperature') | round(1) }}°C
+        icon: mdi:sofa-outline
+        icon_color: teal
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Υπνοδωμάτιο
+        secondary: >
+          {{ states('sensor.bedroom_temperature') | round(1) }}°C
+        icon: mdi:bed-outline
+        icon_color: teal
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Έξω
+        secondary: >
+          {{ states('sensor.outdoor_temperature') | round(1) }}°C
+        icon: mdi:weather-partly-cloudy
+        icon_color: blue
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+  # Κλιματιστικά (Gree / AC)
+  - type: custom:mushroom-title-card
+    title: Κλιματιστικά
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; padding: 16px 0 4px 0; }
+
+  - type: custom:mushroom-climate-card
+    entity: climate.living_room_ac
+    name: Σαλόνι
+    show_temperature_control: true
+    hvac_modes:
+      - "off"
+      - cool
+      - heat
+      - fan_only
+      - dry
+    card_mod:
+      style: |
+        ha-card { border-radius: 12px; }
+
+  - type: custom:mushroom-climate-card
+    entity: climate.bedroom_ac
+    name: Υπνοδωμάτιο
+    show_temperature_control: true
+    hvac_modes:
+      - "off"
+      - cool
+      - heat
+      - fan_only
+    card_mod:
+      style: |
+        ha-card { border-radius: 12px; }
+
+  # Влажность
+  - type: custom:mushroom-title-card
+    title: Υγρασία
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; padding: 16px 0 4px 0; }
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-template-card
+        primary: Σαλόνι
+        secondary: >
+          {{ states('sensor.living_room_humidity') }}%
+        icon: mdi:water-percent
+        icon_color: blue
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Υπνοδωμάτιο
+        secondary: >
+          {{ states('sensor.bedroom_humidity') }}%
+        icon: mdi:water-percent
+        icon_color: blue
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }

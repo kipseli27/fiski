@@ -1,0 +1,81 @@
+################################
+#  View: Κάμερες (Камеры)
+################################
+
+title: Κάμερες
+path: cameras
+icon: mdi:cctv
+
+cards:
+
+  - type: custom:mushroom-title-card
+    title: Κάμερες
+    subtitle: Ζωντανή προβολή
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; }
+
+  # Камера 1 — вход
+  - type: picture-entity
+    entity: camera.front_door
+    name: Κύρια είσοδος
+    show_state: false
+    camera_view: live
+    card_mod:
+      style: |
+        ha-card { border-radius: 12px; overflow: hidden; }
+
+  # Камера 2 — двор/сад
+  - type: picture-entity
+    entity: camera.backyard
+    name: Αυλή
+    show_state: false
+    camera_view: live
+    card_mod:
+      style: |
+        ha-card { border-radius: 12px; overflow: hidden; }
+
+  # Камера 3 — гараж (если есть)
+  - type: conditional
+    conditions:
+      - entity: camera.garage
+        state_not: unavailable
+    card:
+      type: picture-entity
+      entity: camera.garage
+      name: Γκαράζ
+      show_state: false
+      camera_view: live
+      card_mod:
+        style: |
+          ha-card { border-radius: 12px; overflow: hidden; }
+
+  # Камера 4 — общий вид
+  - type: conditional
+    conditions:
+      - entity: camera.street
+        state_not: unavailable
+    card:
+      type: picture-entity
+      entity: camera.street
+      name: Δρόμος
+      show_state: false
+      camera_view: live
+      card_mod:
+        style: |
+          ha-card { border-radius: 12px; overflow: hidden; }
+
+  # Заглушка если камер нет
+  - type: conditional
+    conditions:
+      - entity: camera.front_door
+        state: unavailable
+    card:
+      type: custom:mushroom-template-card
+      primary: Δεν βρέθηκαν κάμερες
+      secondary: Επικοινωνήστε με την υποστήριξη Fiski
+      icon: mdi:cctv-off
+      icon_color: grey
+      card_mod:
+        style: |
+          ha-card { border-radius: 12px; }

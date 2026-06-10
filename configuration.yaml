@@ -1,0 +1,28 @@
+homeassistant:
+  name: "Fiski"
+  unit_system: metric
+  currency: EUR
+  country: GR
+  time_zone: "Europe/Athens"
+  language: "el"
+
+frontend:
+  themes: !include_dir_merge_named themes/
+  extra_module_url:
+    - /local/fiski/fiski-ui.js?v=5
+    - /local/community/lovelace-mushroom/mushroom.js
+
+default_config:
+
+logger:
+  default: warning
+
+lovelace:
+  resource_mode: yaml
+  dashboards:
+    lovelace:
+      mode: yaml
+      filename: lovelace/ui-lovelace.yaml
+      title: Fiski
+      icon: mdi:home
+      show_in_sidebar: true

@@ -1,0 +1,16 @@
+kiosk_mode:
+  kiosk: true
+
+################################
+#  Fiski — Главный dashboard
+#  Клиентский интерфейс (без настроек)
+#  Язык: греческий
+################################
+
+title: Fiski
+views:
+  - !include views/home.yaml
+  - !include views/lights.yaml
+  - !include views/climate.yaml
+  - !include views/security.yaml
+  - !include views/cameras.yaml

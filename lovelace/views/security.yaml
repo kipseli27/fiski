@@ -1,0 +1,121 @@
+################################
+#  View: Ασφάλεια (Безопасность)
+################################
+
+title: Ασφάλεια
+path: security
+icon: mdi:shield-outline
+
+cards:
+
+  - type: custom:mushroom-title-card
+    title: Ασφάλεια
+    subtitle: >
+      {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}
+      Το σύστημα είναι απενεργοποιημένο
+      {% elif is_state('alarm_control_panel.home_alarm', 'armed_away') %}
+      Ενεργοποιημένο — Απουσία
+      {% elif is_state('alarm_control_panel.home_alarm', 'armed_home') %}
+      Ενεργοποιημένο — Στο σπίτι
+      {% elif is_state('alarm_control_panel.home_alarm', 'triggered') %}
+      ΣΥΝΑΓΕΡΜΟΣ!
+      {% else %}{{ states('alarm_control_panel.home_alarm') }}{% endif %}
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; }
+
+  # Панель сигнализации
+  - type: alarm-panel
+    entity: alarm_control_panel.home_alarm
+    name: Σύστημα Συναγερμού
+    states:
+      - arm_away
+      - arm_home
+    card_mod:
+      style: |
+        ha-card { border-radius: 12px; }
+
+  # Двери и окна
+  - type: custom:mushroom-title-card
+    title: Πόρτες & Παράθυρα
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; padding: 16px 0 4px 0; }
+
+  - type: custom:mushroom-template-card
+    primary: Κύρια πόρτα
+    secondary: >
+      {% if is_state('binary_sensor.front_door', 'on') %}Ανοιχτή
+      {% else %}Κλειστή{% endif %}
+    icon: mdi:door-open
+    icon_color: >
+      {% if is_state('binary_sensor.front_door', 'on') %}orange
+      {% else %}green{% endif %}
+    card_mod:
+      style: |
+        ha-card { border-radius: 12px; }
+
+  - type: custom:mushroom-template-card
+    primary: Πόρτα πίσω αυλής
+    secondary: >
+      {% if is_state('binary_sensor.back_door', 'on') %}Ανοιχτή
+      {% else %}Κλειστή{% endif %}
+    icon: mdi:door
+    icon_color: >
+      {% if is_state('binary_sensor.back_door', 'on') %}orange
+      {% else %}green{% endif %}
+    card_mod:
+      style: |
+        ha-card { border-radius: 12px; }
+
+  # Движение
+  - type: custom:mushroom-title-card
+    title: Κίνηση
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; padding: 16px 0 4px 0; }
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-template-card
+        primary: Είσοδος
+        secondary: >
+          {% if is_state('binary_sensor.entrance_motion', 'on') %}Κίνηση!
+          {% else %}Ήσυχα{% endif %}
+        icon: mdi:motion-sensor
+        icon_color: >
+          {% if is_state('binary_sensor.entrance_motion', 'on') %}red
+          {% else %}grey{% endif %}
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Σαλόνι
+        secondary: >
+          {% if is_state('binary_sensor.living_room_motion', 'on') %}Κίνηση!
+          {% else %}Ήσυχα{% endif %}
+        icon: mdi:motion-sensor
+        icon_color: >
+          {% if is_state('binary_sensor.living_room_motion', 'on') %}red
+          {% else %}grey{% endif %}
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+  # Журнал событий — последние 5
+  - type: custom:mushroom-title-card
+    title: Πρόσφατα συμβάντα
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; padding: 16px 0 4px 0; }
+
+  - type: logbook
+    entities:
+      - alarm_control_panel.home_alarm
+      - binary_sensor.front_door
+      - binary_sensor.back_door
+    hours_to_show: 24
+    card_mod:
+      style: |
+        ha-card { border-radius: 12px; }

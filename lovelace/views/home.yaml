@@ -1,0 +1,157 @@
+################################
+#  View: Αρχική (Главная)
+################################
+
+title: Αρχική
+path: home
+icon: mdi:home-outline
+background: var(--lovelace-background)
+
+cards:
+
+  # Приветствие + время
+  - type: custom:mushroom-title-card
+    title: >
+      {% set hour = now().hour %}
+      {% if hour < 6 %}Καλό βράδυ
+      {% elif hour < 12 %}Καλημέρα
+      {% elif hour < 18 %}Καλό απόγευμα
+      {% else %}Καλό βράδυ{% endif %}
+    subtitle: >
+      {{ now().strftime('%A, %d %B %Y') }}
+    card_mod:
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;
+          padding: 8px 0 0 0;
+        }
+
+  # Быстрый статус — 4 плитки
+  - type: horizontal-stack
+    cards:
+
+      - type: custom:mushroom-template-card
+        primary: Φωτισμός
+        secondary: >
+          {% set on = states.light | selectattr('state','eq','on') | list | count %}
+          {{ on }} ενεργά
+        icon: mdi:lightbulb-outline
+        icon_color: >
+          {% if states.light | selectattr('state','eq','on') | list | count > 0 %}
+          amber
+          {% else %}grey{% endif %}
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/lights
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Κλίμα
+        secondary: >
+          {% set t = states('sensor.living_room_temperature') %}
+          {{ t }}°C
+        icon: mdi:thermometer
+        icon_color: teal
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/climate
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Ασφάλεια
+        secondary: >
+          {% if is_state('alarm_control_panel.home_alarm', 'armed_away') %}Ενεργή
+          {% elif is_state('alarm_control_panel.home_alarm', 'armed_home') %}Στο σπίτι
+          {% elif is_state('alarm_control_panel.home_alarm', 'disarmed') %}Ανενεργή
+          {% else %}—{% endif %}
+        icon: mdi:shield-outline
+        icon_color: >
+          {% if is_state('alarm_control_panel.home_alarm', 'disarmed') %}grey
+          {% else %}green{% endif %}
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/security
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Κάμερες
+        secondary: >
+          {% set cams = states.camera | list | count %}
+          {{ cams }} κάμερες
+        icon: mdi:cctv
+        icon_color: blue
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/cameras
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+  # Быстрые сцены
+  - type: custom:mushroom-title-card
+    title: Σκηνές
+    card_mod:
+      style: |
+        ha-card { background: none; box-shadow: none; padding: 16px 0 4px 0; }
+
+  - type: horizontal-stack
+    cards:
+
+      - type: custom:mushroom-template-card
+        primary: Βραδινή
+        icon: mdi:weather-night
+        icon_color: indigo
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          target:
+            entity_id: scene.evening
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Κινηματογράφος
+        icon: mdi:television-play
+        icon_color: deep-purple
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          target:
+            entity_id: scene.cinema
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Αναχώρηση
+        icon: mdi:exit-run
+        icon_color: orange
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          target:
+            entity_id: scene.away
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
+
+      - type: custom:mushroom-template-card
+        primary: Πρωί
+        icon: mdi:weather-sunny
+        icon_color: yellow
+        tap_action:
+          action: call-service
+          service: scene.turn_on
+          target:
+            entity_id: scene.morning
+        card_mod:
+          style: |
+            ha-card { border-radius: 12px; }
